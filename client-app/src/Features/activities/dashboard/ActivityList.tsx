@@ -40,7 +40,7 @@ export default function ActivityList({activities, selectActivity, deleteActivity
                             </Item.Extra>
                         </Item.Content>
 
-                    </Item>feefs
+                    </Item>
                 ))}
             </Item.Group>
         </Segment>
