@@ -15,10 +15,11 @@ interface Props {
     closeForm: () => void;
     createOrEdit: (activity: Activity) => void;
     deleteActivity: (id : string) => void;
+    submitting: (boolean);
 }
 // destructured props {activite}:Props
 export default function ActivityDashboard({activities, selectedActivity, 
-    selectActivity, cancelSelectActivity, editMode, closeForm, openForm, createOrEdit, deleteActivity} : Props ) { // export default function ActivityDashboard(props : Props ) props.activiites.map 
+    selectActivity, cancelSelectActivity, editMode, closeForm, openForm, createOrEdit, deleteActivity, submitting} : Props ) { // export default function ActivityDashboard(props : Props ) props.activiites.map 
 
     // Don't display form by default - set a switch for this 
 
@@ -27,14 +28,20 @@ export default function ActivityDashboard({activities, selectedActivity,
             <Grid.Column width='10'>
                 <ActivityList activities={activities} 
                 selectActivity={selectActivity} 
-                deleteActivity={deleteActivity}/>
+                deleteActivity={deleteActivity}
+                submitting={submitting}/>
             </Grid.Column>
             <Grid.Column width='6'>
                 {selectedActivity && 
                 !editMode && 
                 <ActivityDetails activity={selectedActivity} cancelSelectActivity={cancelSelectActivity} openForm={openForm}  />}
                 {editMode && 
-                <ActivityForm closeForm={closeForm} activity={selectedActivity} createOrEdit={createOrEdit}/> }
+                <ActivityForm 
+                    closeForm={closeForm} 
+                    activity={selectedActivity} 
+                    createOrEdit={createOrEdit} 
+                    submitting={submitting}
+                /> }
             </Grid.Column>
         </Grid>
     )

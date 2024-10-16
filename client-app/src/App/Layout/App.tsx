@@ -15,7 +15,7 @@ function App() {
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined >(undefined);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const [submitting, setSubmitting] = useState(false);
 
 
   useEffect(() => {
@@ -57,21 +57,36 @@ function App() {
     // ? setActivities([...activities.filter(x=>x.id !== activity.id), activity])
     // : setActivities([...activities, activity]);
 
-    if (activity.id) {
-      // If activity.id exists, update the existing activity
-      setActivities([...activities.filter(x => x.id !== activity.id), activity]);
-    } else {
-        // If activity.id does not exist, add a new activity
-        setActivities([...activities, {...activity, id: uuid()}]);
-    }
-    setEditMode(false);
-    setSelectedActivity(activity);
+    setSubmitting(true);
 
+    // If activity.id exists, update the existing activity
+    if (activity.id) {
+      agent.Activities.update(activity).then(() => {
+        setActivities([...activities.filter(x => x.id !== activity.id), activity]); // Removes the Activity with matching ID
+        setEditMode(false); // Removes edit form
+        setSelectedActivity(activity); // Displays new activity in the selected card
+        setSubmitting(false); 
+      })
+    } else { // If activity.id does not exist, add a new activity
+      activity.id = uuid(); // Generate new GUID
+      agent.Activities.create(activity).then(() => {
+        setActivities([...activities, activity]);
+        setEditMode(false); // Removes edit form
+        setSelectedActivity(activity); // Displays new activity in the selected card
+        setSubmitting(false); 
+      })
+    } 
   }
 
   // DELETE
   function handleDeleteActivity(id: string) {
-    setActivities([...activities.filter(x => x.id !== id)])
+
+    setSubmitting(true);
+
+    agent.Activities.delete(id).then(() => {
+      setActivities([...activities.filter(x => x.id !== id)])
+      setSubmitting(false);
+    })
   }
 
   if (loading) return <LoadingComponent content='Loading app'/>
@@ -91,6 +106,7 @@ function App() {
           closeForm={handleCloseForm}
           createOrEdit={handleCreateOrEditActivity}
           deleteActivity={handleDeleteActivity}
+          submitting={submitting}
           />
       </Container>
     </>
