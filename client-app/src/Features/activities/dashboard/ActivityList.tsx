@@ -43,7 +43,6 @@ export default function ActivityList({activities, selectActivity, deleteActivity
                     </Item>
                 ))}
             </Item.Group>
-            dsg
         </Segment>
     )
 }
