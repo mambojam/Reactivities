@@ -6,10 +6,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingComponent from "../../../App/Layout/LoadingComponent";
 import {v4 as uuid} from 'uuid';
 
-export default observer( function ActivityForm() {
+const ActivityForm = () => {
     
     const {activityStore} = useStore();
-    const {selectedActivity,  createActivity, updateActivity, 
+    const {  createActivity, updateActivity, 
         loading, loadActivity, loadingInitial} = activityStore;
     
     const {id} = useParams();
@@ -62,4 +62,5 @@ export default observer( function ActivityForm() {
         </Segment>
     )
 }
-)
+const ObservedActivityForm = observer(ActivityForm);
+export default ObservedActivityForm;

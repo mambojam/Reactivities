@@ -5,7 +5,7 @@ import ActivityListItem from "./ActivityListItem";
 import { Fragment } from "react/jsx-runtime";
 
 
-export default observer ( function ActivityList() {
+function ActivityList() {
 
     const {activityStore} = useStore();
     const {groupedActivities} = activityStore;
@@ -25,4 +25,5 @@ export default observer ( function ActivityList() {
         </>
     )
 }
-)
+const ObservedActivityList = observer(ActivityList);
+export default ObservedActivityList;
