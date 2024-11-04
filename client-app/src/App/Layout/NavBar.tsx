@@ -12,7 +12,7 @@ export default function NavBar() {
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/activities' name='Activities '/>
                 <Menu.Item>
-                <Menu.Item as={NavLink} to='/errors' positive content='Errors' />
+                <Menu.Item as={NavLink} to='/errors'  content='Errors' />
                 
                     <Button as={NavLink} to='/createActivity' positive content='Create Activity' />
                 </Menu.Item>
